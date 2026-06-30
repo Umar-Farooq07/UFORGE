@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import copy
 
 from app.workspace.exceptions import (InvalidWorkspaceError, WorkspaceFileNotFoundError,FileDoesNotExistError,ExtentionDoesNotExistError,   TextDoesNotExistError)
 from app.core.config import DEFAULT_IGNORED_PATHS
@@ -89,7 +90,7 @@ class Workspace():
             
     
     def get_project_tree(self)->dict:
-        return self.project_tree.copy()
+        return copy.deepcopy(self.project_tree)
 
 
     def read_file(self, filepath)->str:
@@ -128,7 +129,7 @@ class Workspace():
         self._build_project_tree()
 
 
-    def get_absolute_path(self, relative_path):
+    def get_absolute_path(self, relative_path)->Path:
         return self.root_path / relative_path
     
 
@@ -152,18 +153,18 @@ class Workspace():
         return temp_list
 
 
-    def find_files_by_extension(self, extention)->list[str]:
+    def find_files_by_extension(self, extension)->list[str]:
         
         temp_list = []
-        logger.info("searching for file with extention %s", extention)
+        logger.info("searching for file with extension %s", extension)
         for file in self.files:
-            if(Path(file).suffix== extention):
+            if(Path(file).suffix== extension):
                 temp_list.append(file)
 
         if not temp_list:
-            logger.warning("Did not get any file with extention %s", extention)
+            logger.warning("Did not get any file with extension %s", extension)
         else:
-            logger.info("Got %d files with extention %s", len(temp_list), extention)
+            logger.info("Got %d files with extension %s", len(temp_list), extension)
         return temp_list
 
 
