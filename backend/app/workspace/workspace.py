@@ -194,3 +194,24 @@ class Workspace():
             logger.info("got %d files containing %s", len(temp_dict), text)
 
         return temp_dict
+    
+    
+    def resolve_module(self, module_name: str) -> str | None:
+        """
+        Converts:
+            app.workspace.workspace
+        into:
+            app/workspace/workspace.py
+
+        Returns None if the module is not part of the workspace.
+        """
+
+        relative_path = module_name.replace(".", "/") + ".py"
+
+        if relative_path in self.files:
+            return relative_path
+
+        return None
+    
+
+    

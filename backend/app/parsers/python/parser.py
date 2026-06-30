@@ -5,7 +5,7 @@ from app.workspace.workspace import Workspace
 from app.parsers.python.models import (
     ClassInfo,
     FunctionInfo,
-    ParsedFile,
+    FileSymbols,
     ImportInfo
 
 )
@@ -17,6 +17,7 @@ class PythonParser:
 
     def __init__(self, workspace: Workspace):
         self.workspace = workspace
+        
 
     def _extract_classes(self,tree: ast.AST,relative_path: str,) -> list[ClassInfo]:
 
@@ -143,7 +144,7 @@ class PythonParser:
         return imports
 
 
-    def parse_file(self, relative_path: str) -> ParsedFile:
+    def parse_file(self, relative_path: str) -> FileSymbols:
 
         logger.info("Parsing file %s", relative_path)
 
@@ -167,17 +168,17 @@ class PythonParser:
             len(imports)
         )
 
-        return ParsedFile(
+        return FileSymbols(
             classes=classes,
             functions=functions,
             imports= imports
         )
 
-    def parse_directory(self) -> dict[str,ParsedFile]:
+    def parse_directory(self) -> dict[str,FileSymbols]:
 
         logger.info("Starting workspace parsing")
 
-        parsed_files: dict[str, ParsedFile] = {}
+        parsed_files: dict[str, FileSymbols] = {}
 
         python_files = self.workspace.find_files_by_extension(".py")
 
@@ -198,3 +199,6 @@ class PythonParser:
         )
 
         return parsed_files
+    
+    
+    

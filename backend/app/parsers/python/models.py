@@ -24,7 +24,7 @@ class ImportInfo:
 
 
 @dataclass
-class ParsedFile:
+class FileSymbols:
     classes: list[ClassInfo] = field(default_factory=list)
     functions: list[FunctionInfo] = field(default_factory=list)
     imports : list[ImportInfo] = field(default_factory=list)
