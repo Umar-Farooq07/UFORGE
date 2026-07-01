@@ -14,3 +14,19 @@ DEFAULT_IGNORED_PATHS = {
     "node_modules",
     ".pytest_cache",
 }
+
+CONFIG_FILES = {
+            "pyproject.toml",
+            "requirements.txt",
+            "package.json",
+            "package-lock.json",
+            "yarn.lock",
+            "pnpm-lock.yaml",
+            "Dockerfile",
+            "docker-compose.yml",
+            "docker-compose.yaml",
+            "Makefile",
+            "pom.xml",
+            "Cargo.toml",
+            "composer.json",
+        }
